@@ -8,6 +8,11 @@
 </head>
 <body>
 
+
+<% flash[:errors].try(:each) do |error| %>
+  <%= error %>
+<% end %>
+
 <%= yield %>
 
 </body>

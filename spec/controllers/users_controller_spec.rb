@@ -22,7 +22,7 @@ RSpec.describe UsersController, type: :controller do
       it "validates presence of username and password" do
         post :create, user: { username: "sally" }
         expect(response).to render_template("new")
-        expect(page).should have_content("Password can't be blank")
+        expect(flash[:errors]).to be_present
       end
     end
   end
