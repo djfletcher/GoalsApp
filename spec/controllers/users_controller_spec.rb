@@ -3,19 +3,27 @@ require 'rails_helper'
 RSpec.describe UsersController, type: :controller do
 
   describe "GET #new" do
-    it "renders the new users page"
+    it "renders the new users page" do
+      get :new
+      expect(response).to render_template("new")
+    end
   end
 
   describe "POST #create" do
 
     context "with valid credentials" do
-      it "saves the new user to the database"
-      it "redirects to user's goals page"
+      it "redirects to user's goals page" do
+        post :create, user: { username: "sally", password: "test123" }
+        expect(response).to redirect_to("/users/#{User.find_by_username("sally").id}/goals")
+      end
     end
 
     context "with invalid credentials" do
-      it "renders the new users template"
-      it "displays errors on the sign up page"
+      it "validates presence of username and password" do
+        post :create, user: { username: "sally" }
+        expect(response).to render_template("new")
+        expect(page).should have_content("Password can't be blank")
+      end
     end
   end
 end
