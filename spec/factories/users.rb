@@ -12,7 +12,7 @@
 
 FactoryGirl.define do
   factory :user do
-    username 'mary'
+    username { Faker::Name.name }
     password 'test123'
   end
 end
